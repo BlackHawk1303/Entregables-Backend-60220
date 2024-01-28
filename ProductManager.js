@@ -63,7 +63,7 @@ productManager.addProduct({
 title: 'Producto 1',
 description: 'Lorem ipsum',
 price: 20.000,
-thumbnail: 'url_del_thumbnail_1',
+thumbnail: 'www.loremipsum.com',
 code: 'ABC123',
 stock: 30
 });
@@ -72,7 +72,7 @@ productManager.addProduct({
     title: 'Producto 2',
     description: 'Lorem',
     price: 90.000,
-    thumbnail: 'url_del_thumbnail_9',
+    thumbnail: 'www.loremipsum.com',
     code: '222',
     stock: 301
     });
@@ -88,12 +88,12 @@ productManager.getProductById(productIdToFind).then(foundProduct => console.log(
 //Modificar un producto
 const productIdToUpdate = 1;
 const updatedProductData = { price: 25.000, stock: 70 };
-productManager.updateProduct(productIdToUpdate, updatedProductData).then(isUpdated => console.log('Producto actualizado:', isUpdated ? 'Éxito' : 'No se encontró el producto'));
+productManager.updateProduct(productIdToUpdate, updatedProductData).then(isUpdated => console.log('Producto Actualizado:', isUpdated ? 'Éxito' : 'No se encontró el Producto'));
 
 //Eliminar un producto
 const productIdToDelete = 1;
-productManager.deleteProduct(productIdToDelete).then(() => console.log('Producto eliminado con ID:', productIdToDelete));
+productManager.deleteProduct(productIdToDelete).then(() => console.log('Producto Eliminado con ID:', productIdToDelete));
 
 //Verificar los productos después de la eliminación
 const remainingProducts = productManager.getProducts();
-console.log('Productos restantes:', remainingProducts);
+console.log('Productos Restantes:', remainingProducts);
