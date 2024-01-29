@@ -47,8 +47,20 @@ async updateProduct(productId, updatedFields) {
     return false;
 }
 async deleteProduct(productId) {
+
+    const data = await fs.readFile(this.path, 'utf-8');
+    this.products = JSON.parse(data);
+
+    let actual = this.products
     this.products = this.products.filter(product => product.id !== productId);
-    await this.saveProducts(); }
+    if (actual.length !== this.products.length){
+        await this.saveProducts(); 
+        return true
+    } 
+    else return false
+
+    
+}
 
 generateId() {
     return this.products.length > 0 ? Math.max(...this.products.map(product => product.id)) + 1 : 1;
@@ -77,6 +89,15 @@ productManager.addProduct({
     stock: 301
     });
 
+    productManager.addProduct({
+        title: 'Producto 3',
+        description: 'Lorem',
+        price: 90.000,
+        thumbnail: 'www.loremipsum.com',
+        code: '222',
+        stock: 301
+        });
+    
 //Consultar productos
 const allProducts = productManager.getProducts();
 console.log('Todos los productos:', allProducts);
@@ -92,7 +113,8 @@ productManager.updateProduct(productIdToUpdate, updatedProductData).then(isUpdat
 
 //Eliminar un producto
 const productIdToDelete = 1;
-productManager.deleteProduct(productIdToDelete).then(() => console.log('Producto Eliminado con ID:', productIdToDelete));
+// // productManager.deleteProduct(productIdToDelete).then(() => console.log('Producto Eliminado con ID:', productIdToDelete));
+productManager.deleteProduct(productIdToDelete).then(isDeleted => console.log('Producto Eliminado:',isDeleted?' Correctamente': 'id no encontrado'))
 
 //Verificar los productos después de la eliminación
 const remainingProducts = productManager.getProducts();
