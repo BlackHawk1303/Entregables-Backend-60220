@@ -1,12 +1,12 @@
 [
   {
-    "title": "Producto 2",
-    "description": "Lorem",
-    "price": 90,
+    "title": "Producto 1",
+    "description": "Lorem ipsum",
+    "price": 25,
     "thumbnail": "www.loremipsum.com",
-    "code": "222",
-    "stock": 301,
-    "id": 2
+    "code": "ABC123",
+    "stock": 70,
+    "id": 1
   },
   {
     "title": "Producto 3",

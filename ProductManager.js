@@ -12,7 +12,7 @@ async loadProducts() {
     const data = await fs.readFile(this.path, 'utf8');
     this.products = JSON.parse(data) || [];
     } catch (error) {
-      //Si hay un error al leer el archivo o al parsear el JSON, retorna un array vacío.
+    //Si hay un error al leer el archivo o al parsear el JSON, retorna un array vacío.
     this.products = [];
     }
 }
@@ -58,8 +58,6 @@ async deleteProduct(productId) {
         return true
     } 
     else return false
-
-    
 }
 
 generateId() {
@@ -100,7 +98,7 @@ productManager.addProduct({
     
 //Consultar productos
 const allProducts = productManager.getProducts();
-console.log('Todos los productos:', allProducts);
+console.log('Todos los Productos:', allProducts);
 
 //Consultar un producto por ID
 const productIdToFind = 1;
@@ -109,12 +107,12 @@ productManager.getProductById(productIdToFind).then(foundProduct => console.log(
 //Modificar un producto
 const productIdToUpdate = 1;
 const updatedProductData = { price: 25.000, stock: 70 };
-productManager.updateProduct(productIdToUpdate, updatedProductData).then(isUpdated => console.log('Producto Actualizado:', isUpdated ? 'Éxito' : 'No se encontró el Producto'));
+productManager.updateProduct(productIdToUpdate, updatedProductData).then(isUpdated => console.log('Producto Actualizado:', isUpdated ? 'Con Éxito' : 'No se encontró el Producto a actualizar'));
 
 //Eliminar un producto
-const productIdToDelete = 1;
+const productIdToDelete = 2;
 // // productManager.deleteProduct(productIdToDelete).then(() => console.log('Producto Eliminado con ID:', productIdToDelete));
-productManager.deleteProduct(productIdToDelete).then(isDeleted => console.log('Producto Eliminado:',isDeleted?' Correctamente': 'id no encontrado'))
+productManager.deleteProduct(productIdToDelete).then(isDeleted => console.log('¿Producto Eliminado?:',isDeleted?' Eliminado Correctamente': 'Producto con ID no encontrado'))
 
 //Verificar los productos después de la eliminación
 const remainingProducts = productManager.getProducts();
