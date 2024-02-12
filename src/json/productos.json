@@ -1,0 +1,24 @@
+[
+  {
+    "title": "title1",
+    "description": "description1",
+    "price": "price1",
+    "thumbnail": "thumbnail1",
+    "code": "code1",
+    "stock": "stock1",
+    "category": "category1",
+    "id": "1707617983217",
+    "status": true
+  },
+  {
+    "title": "title1",
+    "description": "description1",
+    "price": "price1",
+    "thumbnail": "thumbnail1",
+    "code": "code1",
+    "stock": "stock1",
+    "category": "category1",
+    "id": "1707622791753",
+    "status": true
+  }
+]
