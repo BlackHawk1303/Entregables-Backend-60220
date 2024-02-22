@@ -1,0 +1,133 @@
+<h1>Real Time Products</h1>
+<div class="container" id="prodList">
+    {{#each list}}
+    <div class="divider">
+        <p>ID: {{this.id}}</p>
+        <p>Titulo: {{this.title}}</p>
+        <p>Descripcion: {{this.description}}</p>
+        <p>code: {{this.code}}</p>
+        <p>estado: {{this.price}}</p>
+        <p>price: {{this.status}}</p>
+        <p>stock: {{this.stock}}</p>
+        <p>category: {{this.category}}</p>
+        <p>thumbnail: {{this.thumbnail}}</p>
+    </div>
+    {{/each}}
+</div>
+<div>
+    <div id="crearProductoForm" class="form">
+        <input type="text" id="title" name="title" placeholder="Title">
+        <input type="text" id="description" name="description" placeholder="Description">
+        <input type="text" id="code" name="code" placeholder="Code">
+        <input type="text" id="price" name="price" placeholder="Price">
+        <input type="text" id="stock" name="stock" placeholder="Stock">
+        <input type="text" id="category" name="category" placeholder="Category">
+        <input type="text" id="thumbnail" name="thumbnail" placeholder="Thumbnail">
+        <button id="post"> Crear Producto</button>
+    </div>
+
+    <div id="eliminarProductoForm" class="form">
+        <input type="text" name="id" id="delID" placeholder="ID del Producto a Eliminar">
+        <button id="del">Eliminar Producto</button>
+    </div>
+
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    let addBtn = document.getElementById("post")
+    let inputTitle = document.getElementById("title")
+    let inputDes = document.getElementById("description")
+    let inputCode = document.getElementById("code")
+    let inputPrice = document.getElementById("price")
+    let inputStock = document.getElementById("stock")
+    let inputCat = document.getElementById("category")
+    let inputThb = document.getElementById("thumbnail")
+
+    let delbtn = document.getElementById("del")
+    let inputID = document.getElementById("delID")
+
+    addBtn.addEventListener('click', function () {
+
+        let title = inputTitle.value.trim()
+        let description = inputDes.value.trim()
+        let code = inputCode.value.trim()
+        let price = inputPrice.value.trim()
+        let stock = inputStock.value.trim()
+        let category = inputCat.value.trim()
+        let thumbnail = inputThb.value.trim()
+
+        let empty = [title, description, code, price, stock, category, thumbnail].every(x => x === "")
+
+        if (empty) alert("debe de llenar todos los campos vacios")
+        else {
+            let productoList = {
+                title,
+                description,
+                price,
+                thumbnail,
+                code,
+                stock,
+                category
+            }
+            socket.emit('crearProducto', productoList)
+        }
+    })
+
+    delbtn.addEventListener('click', function () {
+
+        let id = inputID.value.trim()
+        if (id === "") alert("debe llenar el campo de id")
+        else socket.emit('eliminarProducto', id)
+
+    })
+
+    //Maneja eventos de actualización (Tiempo Real)
+    socket.on('listadoFinal', (producto) => {
+        const upperDiv = document.getElementById("prodList")
+        upperDiv.innerHTML = ""
+
+        for (let i = 0; i < producto.length; i++) {
+            const innerDiv = document.createElement('div')
+            innerDiv.className = "divider"
+
+            let id = document.createElement('p')
+            let titulo = document.createElement('p')
+            let des = document.createElement('p')
+            let code = document.createElement('p')
+            let estado = document.createElement('p')
+            let price = document.createElement('p')
+            let stock = document.createElement('p')
+            let cat = document.createElement('p')
+            let thum = document.createElement('p')
+
+            id.innerHTML = "ID: " + producto[i].id
+            titulo.innerHTML = "Titulo: " + producto[i].title
+            des.innerHTML = "Descripcion: " + producto[i].description
+            code.innerHTML = "code: " + producto[i].code
+            estado.innerHTML = "estado: " + producto[i].status
+            price.innerHTML = "price: " + producto[i].price
+            stock.innerHTML = "stock: " + producto[i].stock
+            cat.innerHTML = "category: " + producto[i].category
+            thum.innerHTML = "thumbnail: " + producto[i].thumbnail
+
+            innerDiv.appendChild(id)
+            innerDiv.appendChild(titulo)
+            innerDiv.appendChild(des)
+            innerDiv.appendChild(code)
+            innerDiv.appendChild(estado)
+            innerDiv.appendChild(price)
+            innerDiv.appendChild(stock)
+            innerDiv.appendChild(cat)
+            innerDiv.appendChild(thum)
+
+            upperDiv.appendChild(innerDiv)
+        }
+    });
+
+    socket.on('prodError', error => {
+        alert(error)
+    })
+
+</script>

@@ -1,0 +1,24 @@
+[
+  {
+    "title": "h",
+    "description": "holi1holi",
+    "price": "10.99",
+    "thumbnail": "ran",
+    "code": "1231241",
+    "stock": "5",
+    "category": "Bombastic",
+    "id": "1708397982052",
+    "status": true
+  },
+  {
+    "title": "dasd",
+    "description": "asdasd",
+    "price": "10.99",
+    "thumbnail": "asdasd",
+    "code": "130",
+    "stock": "2",
+    "category": "Bombastic",
+    "id": "1708398089254",
+    "status": true
+  }
+]

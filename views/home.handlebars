@@ -1,0 +1,16 @@
+<h1>Home</h1>
+<div class="container">  
+    {{#each list}}
+        <div class="divider"> 
+            <p>ID: {{this.id}}</p>
+            <p>Title: {{this.title}}</p>
+            <p>Description: {{this.description}}</p>
+            <p>code: {{this.code}}</p>
+            <p>price: {{this.status}}</p>
+            <p>stock: {{this.stock}}</p>
+            <p>category: {{this.category}}</p>
+            <p>thumbnail: {{this.thumbnail}}</p>
+        </div>   
+    {{/each}}
+</div>
+<script src="/socket.io/socket.io.js"></script>
