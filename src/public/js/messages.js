@@ -10,14 +10,14 @@ window.onload = async function () {
 
     const { value: email } = await Swal.fire({
         title: "Bienvenido al CHAT",
-        input: "email",
-        inputLabel: "Por favor ingrese su Correo",
-        inputPlaceholder: "hola@hola.cl",
+        input: "Email",
+        inputLabel: "Por Favor Ingrese su Correo/Email",
+        inputPlaceholder: "correo@host.cl",
         allowOutsideClick: false,
         allowEscapeKey: false
     });
     if (email) {
-        Swal.fire(`Correo ingresado: ${email}`);
+        Swal.fire(`Correo Ingresado: ${email}`);
         userEmail = email
     }
 
@@ -33,7 +33,6 @@ btnSend.addEventListener('click', evt => {
     sendMessage()
 })
 
-
 socket.on('log', data => {
     let logs = '';
     data.forEach(d => {
@@ -42,29 +41,16 @@ socket.on('log', data => {
     log.innerHTML = logs;
 });
 
-
 function sendMessage() {
-    // let date = new Date()
-
-    // let yr = date.getFullYear()
-    // let month = date.getMonth() + 1
-    // let day = date.getDate()
-
-    // let hrs = date.getHours().toString()
-    // let min = date.getMinutes().toString()
-
-    // let actualDate = `${day}/${month}/${yr} ${hrs}:${min}`
 
     let inputChat = txt.value.trim()
 
-    let send = { email: userEmail, message: inputChat, /*fecha: actualDate*/ }
+    let send = { email: userEmail, message: inputChat, }
     console.log(send)
     socket.emit('message', send);
 
-
-
     Toastify({
-        text: "mensaje enviado",
+        text: "Mensaje Enviado",
         duration: 3000
     }).showToast();
 

@@ -4,7 +4,6 @@ import __dirname from './utils.js';
 import handlebars from 'express-handlebars';
 import productsRoute from './routes/products.routes.js'
 import cartRouter from './routes/cartManager.routes.js';
-
 import chatRouter from "./routes/chat.routes.js"
 import { Server } from 'socket.io'
 import chatServices from "./dao/db/message.services.js";
@@ -28,7 +27,7 @@ app.use('/', chatRouter);
 
 app.get('/ping', (req, res) => {
     console.log(__dirname);
-    res.send({ status: "ok" })
+    res.send({ status: "OK" })
 })
 
 const httpServer = app.listen(PORT, () => {
@@ -42,10 +41,10 @@ const URL_MONGO = 'mongodb+srv://miguelfarias1303:OjldW3UIjIT9GRCV@cluster0.bfgx
 const mongoConnect = async () => {
     try {
         mongoose.connect(URL_MONGO)
-        console.log("Conexión exitosa a base de datos: MongoDB")
+        console.log("Conexión Exitosa a Base de Datos: MongoDB")
     }
     catch (e) {
-        console.error("No se puede conectar a la base de datos: " + e)
+        console.error("No se Puede Conectar a la Base de Datos: " + e)
         process.exit();
     }
 }
