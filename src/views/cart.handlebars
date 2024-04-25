@@ -1,0 +1,24 @@
+{{#if success}}
+<div class="cart-container">
+    <p>CART ID : {{docs.0._id}} </p>
+    {{#each docs}}
+    <div class="cart-item">
+        {{#each this.products}}
+        <div class="product-details">
+            <p>Titulo : {{this.products.title}} </p>
+            <p>Descripción : {{this.products.description}} </p>
+            <p>Codigo : {{this.products.code}} </p>
+            <p>Estado : {{this.products.status}} </p>
+            <p>Precio : {{this.products.price}} </p>
+            <p>Stock : {{this.products.stock}} </p>
+            <p>Categoria : {{this.products.category}} </p>
+            <p>Cantidad : {{this.quantity}} </p>
+        </div>
+        <p>-----------------------------------------------</p>
+        {{/each}}
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<h1 class="cart-title">Carro</h1>
+{{/if}}
