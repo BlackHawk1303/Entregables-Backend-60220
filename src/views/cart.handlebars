@@ -1,0 +1,30 @@
+{{#if success}}
+<div class="cart-container">
+    <div id="header"> <a href="/user/current">Usuario</a> <a href="/products">Productos</a></div>
+    <p>CART ID : {{docs.0._id}} </p>
+    {{log docs}}
+    {{#each docs}}    
+    <div class="cart-item">
+        {{#each this.products}}
+        <div class="product-details">
+            <p>Titulo : {{this.products.title}} </p>
+            <p>Descripción : {{this.products.description}} </p>
+            <p>Codigo : {{this.products.code}} </p>
+            <p>Estado : {{this.products.status}} </p>
+            <p>Precio : {{this.products.price}} </p>
+            <p>Stock : {{this.products.stock}} </p>
+            <p>Categoria : {{this.products.category}} </p>
+            <p>Cantidad : {{this.quantity}} </p>
+        </div>
+        <p>-----------------------------------------------</p>
+        {{/each}}
+    </div>
+    {{/each}}
+    <button id="btnComprar">Comprar</button>
+</div>
+{{else}}
+<h1 class="cart-title">Carro</h1>
+<h1>Carro de Compras Vacio</h1>
+
+{{/if}}
+<script src="/js/buyProducts.js"></script>

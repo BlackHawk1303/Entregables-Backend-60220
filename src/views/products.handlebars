@@ -1,0 +1,38 @@
+{{#if valid}}
+<div class="product-container">
+    <div id="header"> <a href="/user/current"> Ir a Usuario</a> <a id="enlace" href=""> Ir a Carrito</a></div>
+    <div>
+        <h1>BIENVENIDO ("{{user.rol}}") Sr/a {{user.name}} Edad {{user.age}}</h1>
+        <p>-----</p>
+        <button id="logout">Cerrar Sesión</button>
+    </div>
+    {{#each payload}}
+    <div class="product-item">
+        <p>Titulo : {{this.title}} </p>
+        <p>Descripción : {{this.description}} </p>
+        <p>Código : {{this.code}} </p>
+        <p>Estado : {{this.status}} </p>
+        <p>Precio : {{this.price}} </p>
+        <p>Stock : {{this.stock}} </p>
+        <p>Categoria : {{this.category}} </p>
+    </div>
+    <button class="allBtn" name={{this.id}}> Enviar al Carrito </button>
+    <p>--------------------------------------</p>
+    {{/each}}
+</div>
+<br />
+<div class="navigation-links">
+    {{#if hasPrevPage}}
+    <a href={{this.prevLink}}> Pagina Anterior</a>
+    {{/if}}
+    {{this.page}}
+    {{#if hasNextPage}}
+    <a href={{this.nextLink}}> Pagina Siguiente</a>
+    {{/if}}
+</div>
+{{else}}
+<h1>NO HAY PRODUCTOS CON LA BUSQUEDA APLICADA</h1>
+{{/if}}
+
+<script src="/js/infoCart.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
