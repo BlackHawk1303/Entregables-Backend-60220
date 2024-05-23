@@ -1,0 +1,17 @@
+fatal: GET request en / - Fecha y Hora: 2024-05-19 00:03:58 - Descripción: Ocurrió un Error Crítico que Requiere Atención Inmediata.
+error: GET request en / - Fecha y Hora: 2024-05-19 00:03:58 - Descripción: Ocurrió un Error en la Aplicación.
+warning: GET request en / - Fecha y Hora: 2024-05-19 00:03:58 - Descripción: Advertencia Sobre un Posible Problema.
+http: GET request en / - Fecha y Hora: 2024-05-19 00:03:58 - Descripción: Información de la Solicitud HTTP Recibida.
+info: GET request en / - Fecha y Hora: 2024-05-19 00:03:58 - Descripción: Información General sobre la Operación de la Aplicación.
+fatal: GET request en / - Fecha y Hora: 2024-05-19 00:05:58 - Descripción: Ocurrió un Error Crítico que Requiere Atención Inmediata.
+error: GET request en / - Fecha y Hora: 2024-05-19 00:05:58 - Descripción: Ocurrió un Error en la Aplicación.
+warning: GET request en / - Fecha y Hora: 2024-05-19 00:05:58 - Descripción: Advertencia Sobre un Posible Problema.
+http: GET request en / - Fecha y Hora: 2024-05-19 00:05:58 - Descripción: Información de la Solicitud HTTP Recibida.
+info: GET request en / - Fecha y Hora: 2024-05-19 00:05:58 - Descripción: Información General sobre la Operación de la Aplicación.
+fatal: GET request en / - Fecha y Hora: 2024-05-19 00:07:04 - Descripción: Ocurrió un Error Crítico que Requiere Atención Inmediata.
+error: GET request en / - Fecha y Hora: 2024-05-19 00:07:04 - Descripción: Ocurrió un Error en la Aplicación.
+fatal: GET request en / - Fecha y Hora: 2024-05-19 00:07:17 - Descripción: Ocurrió un Error Crítico que Requiere Atención Inmediata.
+error: GET request en / - Fecha y Hora: 2024-05-19 00:07:17 - Descripción: Ocurrió un Error en la Aplicación.
+warning: GET request en / - Fecha y Hora: 2024-05-19 00:07:17 - Descripción: Advertencia Sobre un Posible Problema.
+http: GET request en / - Fecha y Hora: 2024-05-19 00:07:17 - Descripción: Información de la Solicitud HTTP Recibida.
+info: GET request en / - Fecha y Hora: 2024-05-19 00:07:17 - Descripción: Información General sobre la Operación de la Aplicación.
