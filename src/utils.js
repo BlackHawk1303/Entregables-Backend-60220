@@ -3,9 +3,9 @@ import { dirname } from 'path'
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import jwt from 'jsonwebtoken'
-import { title } from 'process';
-import { faker } from '@faker-js/faker';
-import { v4 as uuid } from 'uuid';
+import { title } from 'process'
+import { faker } from '@faker-js/faker'
+import { v4 as uuid } from 'uuid'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -20,7 +20,7 @@ export const tokenGenerator = (user) => { return jwt.sign({ user }, KEY, { expir
 
 export const authToken = (req, res, next) => {
     const header = req.headers.authorization
-
+    console.log(header)
     if (!header) {
         return res.status(401).send({error: 'No estás Autorizado para estar Aquí. Por favor, Vuelve a Autenticarte.' })
     }
@@ -51,47 +51,21 @@ export const passCall = (strategy) => {
     }
 }
 
-//Middleware Anterior
-// export const authorization = (role) => {
-//     return async (req, res, next) => {
-//         try {
-//             if (!req.user) {
-//                 return res.status(401).json({ error: "Usuario no encontrado en el JWT" })
-//             }
-//             if (req.user.role !== role) {
-//                 return res.status(403).json({ error: "No Tienes Permisos para Ver este Contenido" })
-//             }
-//             next()
-//         } catch (error) {
-
-//             console.error("Error de Autorización:", error)
-//             return res.status(500).json({ error: "Error de Servidor al Verificar la Autorización" })
-//         }
-//     }
-// }
-//Middleware Anterior
-
-//Middleware Actual
-export const authorization = () => {
+export const authorization = (role) => {
     return async (req, res, next) => {
-        try {
-            console.log(req.user[0].role);
-            switch (req.user[0].role) {
-                case "admin":
-                    res.render('editProd');
-                case "user":
-                    res.render('user'); 
-                    break; 
-                default:
-                    next();
-                    break;
-            }
-        } catch (error) {
-            console.error("Error de Autenticación:", error);
-            res.status(500).json({ error: "Error del Servidor al Verificar Autenticación" });
+        if (!req.user) return res.status(401).send("user not found in JWT")
+
+        let valid = false
+
+        for (let i = 0; i < role.length; i++) {
+            if (req.user.role === role[i]) valid = true
         }
+
+        if (valid) return next()
+        else return res.status(403).send("No tienes permisos para ver este contenido")       
     }
 }
+
 //Middleware Actual
 
 export const check = (role) => {
@@ -106,7 +80,7 @@ export const check = (role) => {
     }
 }
 
-//NEW
+
 export const generaterProduct = () =>{
 return {
     title: faker.commerce.productName(),
@@ -119,8 +93,22 @@ return {
     code: uuid()
 }
 }
-//NEW
 
+//NEW
+export const formattedMonth = (date) => {
+    return (date.getMonth() + 1).toString().padStart(2, '0');
+}
+
+export const formattedHours = (date) => {
+    const hours = date.getHours() + 1
+    return hours < 10 ? '0' + hours : hours.toString();
+}
+
+export const formattedDay = (date) => {
+    const day = date.getDate()
+    return day < 10 ? '0' + day : day.toString();
+}
+//NEW
 export const HTTP_STATUS = {
     NOT_FOUND: 404,
     UNAUTHORIZED: 401,

@@ -7,25 +7,25 @@ function renderUserData(user) {
     `;
     let enlace = document.getElementById("enlace")
     enlace.href = `/cart/${user.cart}`
-    return html;
+    return html
 }
 
 function handleStatus(status) {
     if (status === 200) {
         return true;
     } else if (status === 401) {
-        alert("Tus Credenciales han Expirado. Favor, Vuelve a Iniciar Sesión.");
-        window.location.replace('/login');
+        alert("Tus Credenciales han Expirado. Favor, Vuelve a Iniciar Sesión.")
+        window.location.replace('/login')
     } else if (status === 403) {
-        alert("No estás Autorizado para estar Aquí.");
-        window.location.replace('/login');
+        alert("No estás Autorizado para estar Aquí.")
+        window.location.replace('/login')
     }
     return false;
 }  
 
 async function loadData() {
     const userId = localStorage.getItem('userID');
-    const jwt = `Bearer ${localStorage.getItem('userToken')}`;
+    const jwt = `Bearer ${localStorage.getItem('userToken')}`
     const response = await fetch(`/user/current/${userId}`, {
         method: 'GET',
         headers: {
@@ -35,13 +35,13 @@ async function loadData() {
     });
 
     if (!response.ok) {
-        handleStatus(response.status);
-        return;
+        handleStatus(response.status)
+        return
     }
     
-    const user = await response.json();
-    const div = document.getElementById('midiv');
-    div.innerHTML = renderUserData(user);
+    const user = await response.json()
+    const div = document.getElementById('midiv')
+    div.innerHTML = renderUserData(user)
 }
 
 window.onload = loadData;

@@ -1,13 +1,12 @@
-import { Router } from "express";
-// import userProvider from "../dao/db/user.services.js";
+import { Router } from "express"
 import bcrypt from "bcrypt"
-import {validationResult} from "express-validator"
-import userModel from "../dao/db/models/user.model.js";
-import passport from 'passport';
-import passportLocal from 'passport-local';
-import { authToken , validpass, tokenGenerator, HTTP_STATUS} from "../utils.js";
-import { userLogin, get_User, current_user } from "../controllers/all.controller.js";
-import { authorization } from "../utils.js";
+import { validationResult } from "express-validator"
+import userModel from "../dao/db/models/user.model.js"
+import passport from 'passport'
+import passportLocal from 'passport-local'
+import { authToken, validpass, tokenGenerator, HTTP_STATUS } from "../utils.js"
+import { userLogin, get_User, current_user, premium_change } from "../controllers/all.controller.js"
+import { authorization } from "../utils.js"
 
 
 const router = Router()
@@ -36,33 +35,7 @@ router.post("/user/register", passport.authenticate('register', { failureRedirec
     async (req, res) => {
         res.status(201).json({ status: "success", message: "Usuario Creado Exitosamente" });
     });
-    
-// router.post("/user/login", async (req, res) => {
-//     try {
-//         const { email, password } = req.body;
-//         const user = await userManager.findUser({ email });
 
-//         if (user.length === 0) {
-//             return res.status(HTTP_STATUS.NOT_FOUND).send({ error: "Usuario no Encontrado", message: "Usuario o Contraseña Incorrectos" });
-//         }
-//         if (!validpass(user, password)) {
-//             return res.status(HTTP_STATUS.UNAUTHORIZED).send({ error: "Acceso no Autorizado", message: "Usuario o Contraseña Incorrectos" });
-//         }
-//         const tokenData = {
-//             name: `${user.first_name} ${user.last_name}`,
-//             email: user.email,
-//             age: user.age,
-//             role: user.role
-//         };
-
-//         const token = tokenGenerator(tokenData);
-//         console.log(token)
-//         res.send({ message: "Inicio de Sesión Satisfactorio", token, id: user._id });
-//     } catch (error) {
-//         console.error("Error al Iniciar Sesión:", error);
-//         res.status(HTTP_STATUS.SERVER_ERROR).send({ status: "error", error: "Error Interno de la Aplicación." });
-//     }
-// });
 router.post("/user/login", userLogin)
 
 router.get('/user/logout', (req, res) => {
@@ -97,15 +70,30 @@ router.get('/user/githubCallback', passport.authenticate('github', { failureRedi
     });
 
 router.get('/user/github', passport.authenticate('github', { scope: ['user:email'] }),
-    async (req, res) => {});
+    async (req, res) => { });
 
 
-router.get('/user/current/:userId', authToken, current_user)
+router.get('/user/current/:userId', authToken, authorization(["user", "premium"]), current_user)
 
 router.get('/user/current/', async (req, res) => {
-    res.render('user')    
+    res.render('user')
+})
+
+router.get('/user/administrator/', async (req, res) => {
+    res.render('editProduct')
 })
 
 router.get('/api/user/:id', get_User)
+
+router.get('/user/recovery', async (req, res) => {
+    res.render('passwordRecovery')
+})
+
+router.get('/admin/validator', authToken, authorization(["admin", "premium"]), async (req, res) => {
+})
+
+
+router.get('/api/user/premium/:uid', premium_change)
+
 
 export default router;

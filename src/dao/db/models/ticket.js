@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-const ticketCollection = 'ticket';
+const ticketCollection = 'ticket'
 
 const requiredString = {
     type: String,
@@ -26,6 +26,6 @@ const ticketSchema = new mongoose.Schema({
     purchaser: requiredString
 });
 
-const TicketModel = mongoose.model(ticketCollection, ticketSchema);
+const TicketModel = mongoose.model(ticketCollection, ticketSchema)
 
-export default TicketModel;
+export default TicketModel

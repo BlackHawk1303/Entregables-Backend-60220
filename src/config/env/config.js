@@ -1,9 +1,6 @@
 import dotenv from 'dotenv'
 import __dirname from '../../utils.js'
 import { Command } from 'commander'
-//import path from 'path'
-
-//dotenv.config({ path: __dirname + '/config/env/.env.development' })
 
 const commands = new Command()
 
@@ -16,8 +13,6 @@ const enviroment = commands.opts().mode
 dotenv.config({
     path: enviroment === "prod" ? __dirname  +  '/config/env/.env.production' : __dirname + '/config/env/.env.development'
 })
-
-
 
 export default {
     port: process.env.PORT,

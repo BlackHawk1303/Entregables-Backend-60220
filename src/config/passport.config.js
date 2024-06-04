@@ -10,11 +10,9 @@ import config from './env/config.js'
 import CustomError from '../services/errors/customError.js'
 import { createUserError } from '../services/errors/messages/user.errors.js'
 
-
-
-const userManager = new userProvider();
-const cartManager = new cartProvider();
-const localStrategy = passportLocal.Strategy;
+const userManager = new userProvider()
+const cartManager = new cartProvider()
+const localStrategy = passportLocal.Strategy
 const JWTStrategy = jwtStrategy.Strategy
 const jwtExtract = jwtStrategy.ExtractJwt
 const initPassport = () => {
@@ -22,9 +20,9 @@ const initPassport = () => {
     passport.use('jwt', new JWTStrategy(
         {
             jwtFromRequest: jwtExtract.fromExtractors([getCookie]),
-            secretOrKey:KEY
+            secretOrKey: KEY
         },
-        async (jwtPayload, done) =>{
+        async (jwtPayload, done) => {
             try {
                 return (done(null, jwtPayload.user))
             }
@@ -44,14 +42,14 @@ const initPassport = () => {
                     return done(null, false);
                 }
 
-                if (!first_name, !last_name, !email, !age, !pass){
+                if (!first_name, !last_name, !email, !age, !password) {
                     CustomError.createError({
-                        name:"UserCreationError",
-                        cause: createUserError({first_name, last_name, email,age,pass}),
-                        message:"Error al Crear Usuario: Faltan Uno o Más Campos Obligatorios"
+                        name: "UserCreationError",
+                        cause: createUserError({ first_name, last_name, email, age, password }),
+                        message: "Error al Crear Usuario: Faltan Uno o Más Campos Obligatorios"
                     })
                 }
-                
+
 
                 const cart_id = await cartManager.createCart()
                 console.log(cart_id._id)
@@ -75,15 +73,15 @@ const initPassport = () => {
     passport.use('login', new localStrategy(
         { passReqToCallback: true, usernameField: 'email' },
         async (req, email, password, done) => {
-            try {               
-                const user = await userManager.findUser({ email }); 
+            try {
+                const user = await userManager.findUser({ email });
                 console.log(user.password);
-                console.log(password) 
-                            
-                if (!validpass(user, password)) {                    
+                console.log(password)
+
+                if (!validpass(user, password)) {
                     return done(null, false);
                 }
-                
+
                 return done(null, user);
             } catch (error) {
                 return done(error);
@@ -97,10 +95,10 @@ const initPassport = () => {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            const user = await userManager.findUser({ "_id": id });
+            const user = await userManager.findUser({ "_id": id })
             done(null, user);
         } catch (error) {
-            console.error("Error Deserializando Usuario: " + error);
+            console.error("Error Deserializando Usuario: " + error)
             done(error);
         }
     });
@@ -109,13 +107,13 @@ const initPassport = () => {
         {
             // clientID: 'Iv1.9600655083dc693a',
             // clientSecret: 'a51d04f0a363b67ae8939e7e3b6fc667b7aeae4c',
-            clientID:config.clientId,
-            clientSecret:config.clientSecret,            
+            clientID: config.clientId,
+            clientSecret: config.clientSecret,
             callbackURL: 'http://localhost:8080/user/githubCallback'
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                const existingUser = await userManager.findUser({ email: profile._json.email });                   
+                const existingUser = await userManager.findUser({ email: profile._json.email })
 
                 if (existingUser) {
                     return done(null, existingUser);

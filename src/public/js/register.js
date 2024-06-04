@@ -1,10 +1,10 @@
-const form = document.getElementById('registerForm');
+const form = document.getElementById('registerForm')
 
 form.addEventListener('submit', e => {
     e.preventDefault();
     const data = new FormData(form);
     const obj = {};
-    data.forEach((value, key) => obj[key] = value);
+    data.forEach((value, key) => obj[key] = value)
 
     fetch('/user/register', {
         method: 'POST',
@@ -14,13 +14,13 @@ form.addEventListener('submit', e => {
         }
     }).then(async (result) => {
         if (result.status === 201) {
-            window.location.replace('/login');
+            window.location.replace('/login')
         } else {
-            const errorData = await result.json();
-            alert(`Error: ${errorData.error}`);
+            const errorData = await result.json()
+            alert(`Error: ${errorData.error}`)
         }
     }).catch(error => {
         console.error('Error:', error);
-        alert('Error Interno del Servidor');
+        alert('Error Interno del Servidor')
     });
 });

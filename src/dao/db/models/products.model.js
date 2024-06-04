@@ -28,7 +28,11 @@ const productsSchema = new moongose.Schema({
     stock: numberTypeSchemaRequired,
     category: strTypeSchemaRequired,
     thumbanail: strTypeSchemaRequired,
-    status:Boolean
+    status:Boolean,
+    owner: {
+        type:String,
+        default:"admin"
+    }
 })
 
 productsSchema.plugin( mongoosePaginate )

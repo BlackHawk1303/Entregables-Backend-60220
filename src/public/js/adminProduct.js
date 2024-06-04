@@ -1,17 +1,24 @@
-const getInputValue = (input) => input.value.trim();
-const isAnyEmpty = (...values) => values.some(value => value === "");
+const getInputValue = (input) => input.value.trim()
+const isAnyEmpty = (...values) => values.some(value => value === "")
+
+const jwt = `Bearer ${localStorage.getItem('userToken')}`
 
 const handleProductSubmission = async (endpoint, method, product) => {
     if (!isAnyEmpty(...Object.values(product))) {
         const response = await fetch(endpoint, {
             method: method,
             body: JSON.stringify(product),
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json', 'Authorization': jwt, }
         });
         if (response.status === 200) {
             alert(method === "POST" ? "Producto Creado" : "Producto Actualizado");
-        } else {
+        }
+        else if (response.status === 401) {
+            alert("No estas autorizado para modificar/eliminar este producto");
+        }
+        else {
             console.log(await response.json());
+            alert(await response.json())
         }
     } else {
         alert("Por favor, Completa Todos los Campos.");
@@ -19,11 +26,11 @@ const handleProductSubmission = async (endpoint, method, product) => {
 };
 
 const selectors = [
-    "txtTitleCreate", "txtDescriptionCreate", "txtPriceCreate", 
-    "txtStockCreate", "txtCategoryCreate", "txtThumbnailCreate", 
-    "btnAgregar", "txtIDUpdate", "txtTitleUpdate", 
-    "txtDescriptionUpdate", "txtpriceUpdate", "txtstockUpdate", 
-    "txtcategoryUpdate", "txtthumbnailUpdate", "btnUpdate", 
+    "txtTitleCreate", "txtDescriptionCreate", "txtPriceCreate",
+    "txtStockCreate", "txtCategoryCreate", "txtThumbnailCreate",
+    "btnAgregar", "txtIDUpdate", "txtTitleUpdate",
+    "txtDescriptionUpdate", "txtpriceUpdate", "txtstockUpdate",
+    "txtcategoryUpdate", "txtthumbnailUpdate", "btnUpdate",
     "txtIDDelete", "btnDelete"
 ];
 
@@ -65,14 +72,20 @@ btnDelete.addEventListener('click', async () => {
     const id = getInputValue(txtIDDelete);
     if (!isAnyEmpty(id)) {
         const response = await fetch(`/api/products/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: { 'Content-Type': 'application/json', 'Authorization': jwt, }
         });
         if (response.status === 200) {
             alert("Producto Eliminado");
-        } else {
+        }
+        else if (response.status === 401) {
+            alert("No estas autorizado para modificar/eliminar este producto")
+        }
+        else {
             console.log(await response.json());
+            alert(await response.json())
         }
     } else {
-        alert("Por favor, Proporciona un ID Válido.");
+        alert("Por favor, Proporciona un ID Válido.")
     }
-});
+})

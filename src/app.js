@@ -1,26 +1,27 @@
-import express from 'express';
-import exphbs from 'express-handlebars';
-import mongoose from "mongoose";
-import __dirname from './utils.js';
+import express from 'express'
+import exphbs from 'express-handlebars'
+import mongoose from "mongoose"
+import __dirname from './utils.js'
 import handlebars from "express-handlebars"
 import productsRoute from './routes/products.routes.js'
-import cartRouter from './routes/cartManager.routes.js';
+import cartRouter from './routes/cartManager.routes.js'
 import chatRouter from "./routes/chat.routes.js"
 import { Server } from 'socket.io'
-import chatServices from "./services/message.services.js";
+import chatServices from "./services/message.services.js"
 import indexRouter from "./routes/index.routes.js"
 import session from "express-session"
 import connect from "connect-mongo"
 import path from 'path';
 import userRouter from "./routes/user.session.view.routes.js"
 import gitRoutes from "./routes/github.views.routes.js"
-import passport from "passport";
-import initPassport from "./config/passport.config.js";
+import passport from "passport"
+import initPassport from "./config/passport.config.js"
 import config from './config/env/config.js'
 import mockRouter from './routes/mock.routes.js'
-
 import loggerTest from './routes/loggers.routes.js'
-import { logger } from "./config/loggers/custom.logger.js";
+import recoveryPassword from './routes/emailRecovery.routes.js'
+import { logger } from "./config/loggers/custom.logger.js"
+import { recoveryEmail } from './controllers/all.controller.js'
 
 let chat = new chatServices();
 
@@ -33,8 +34,6 @@ app.use(express.urlencoded({ extended: true }))
 
 // const URL_MONGO = 'mongodb+srv://miguelfarias1303:OjldW3UIjIT9GRCV@cluster0.bfgxvqz.mongodb.net/ecommerce?retryWrites=true&w=majority' 
 const URL_MONGO = config.mongoUrl
-
-
 
 app.use(session({
     store: connect.create({
@@ -66,6 +65,7 @@ app.use("/", userRouter)
 app.use("/github",gitRoutes)
 app.use("/", mockRouter)
 app.use("/loggerTest", loggerTest)
+app.use("/recovery", recoveryPassword)
 
 app.get('/ping', (req, res) => {
     console.log(__dirname);

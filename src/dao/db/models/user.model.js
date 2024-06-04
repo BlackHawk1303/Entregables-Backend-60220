@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
-const collection = 'users';
+const collection = 'users'
 const userSchema = new mongoose.Schema({
     first_name: String,
     last_name: String,
@@ -34,6 +34,6 @@ const userSchema = new mongoose.Schema({
     }
     
 });
-const userModel = mongoose.model(collection, userSchema);
+const userModel = mongoose.model(collection, userSchema)
 
-export default userModel;
+export default userModel

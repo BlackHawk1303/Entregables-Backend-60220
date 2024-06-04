@@ -1,14 +1,14 @@
 import { Router } from "express";
 import cartServices from "../services/cartManager.services.js";
 import { authToken, authorization } from "../utils.js";
-import { getCart, postCart, findCartByID, addProductCart, deleteCart, deleteProductByID, putUpdateCart, putUpdateCartByproductID, postPurchase} from "../controllers/all.controller.js";
+import { getCart, postCart, findCartByID, addProductCart, deleteCart, deleteProductByID, putUpdateCart, putUpdateCartByproductID, postPurchase } from "../controllers/all.controller.js";
 
 const cartRouter = Router()
 
 cartRouter.get("/", getCart)
 cartRouter.post("/", postCart)
 cartRouter.get("/:_id", findCartByID)
-cartRouter.post("/:cid/products/:pid", addProductCart)
+cartRouter.post("/:cid/products/:pid", authToken, authorization(["user", "premium"]), addProductCart)
 cartRouter.delete('/:_id', deleteCart)
 cartRouter.delete('/:cid/products/:pid', deleteProductByID)
 cartRouter.put('/:_id', putUpdateCart)

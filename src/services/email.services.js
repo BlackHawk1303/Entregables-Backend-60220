@@ -42,6 +42,28 @@ class EmailSender {
             return "error";
         }
     }
+    sendRecoverEmail = async (data) => {
+
+        const mailOptions = {
+            from: configEnv.gmailAccount,
+            to: configEnv.gmailAccount,
+            subject: "TEST --- Recuperación de tu Contraseña",
+            html: `Solicitud de Recuperación de Contraseña                
+                Enlace: http://localhost:8080/recovery/${data.recoverID}
+                
+                IMPORTANTE: Este Enlace Tiene una Duración de 60:00 min.           
+            `
+        }
+        try {
+            const info = await transporter.sendMail(mailOptions);
+            //%s es un marcador de posición
+            console.log("Mensaje Enviado: %s", info.messageId);
+            return "success";
+        } catch (error) {
+            console.error("Error al Enviar Email:", error);
+            return "error";
+        }
+    }
 }
 
 export default EmailSender;
