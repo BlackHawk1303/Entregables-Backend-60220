@@ -1,0 +1,120 @@
+paths:
+  /api/products/:
+    post:
+      summary: Crear Productos (solo Funciona para Usuarios Administradores y Premium)
+      tags:
+        - Productos
+      requestBody:
+        $ref: "#/components/requestBodies/createProduct"
+      responses:
+        "200":
+          description: El Producto ha Sido Creado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
+          description: Error en la Solicitud
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No Autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Prohibido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error Interno del Servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID del Producto Creado
+        title:
+          type: string
+          description: Nombre del Producto
+        description:
+          type: string
+          description: Descripción del Producto
+        price:
+          type: number
+          format: float
+          description: Precio del producto
+        stock:
+          type: integer
+          description: Cantidad de Producto en stock
+        category:
+          type: string
+          description: Categoría del Producto
+        thumbnail:
+          type: string
+          description: URL de la imagen en miniatura del Producto
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha y hora de creación del Producto
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del error
+        code:
+          type: integer
+          description: Código de error
+  requestBodies:
+    createProduct:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - title
+              - description
+              - price
+              - stock
+              - category
+              - thumbnail
+            properties:
+              title:
+                type: string
+                description: Nombre del Producto
+              description:
+                type: string
+                description: Descripción del Producto
+              price:
+                type: number
+                format: float
+                description: Precio del Producto
+              stock:
+                type: integer
+                description: Cantidad de Producto en Stock
+              category:
+                type: string
+                description: Categoría del Producto
+              thumbnail:
+                type: string
+                description: URL de la Imagen en Miniatura del Producto
+            example:
+              title: Producto Espectacular
+              description: Una Descripción Digna de un Producto Espectacular
+              price: 25000
+              stock: 230
+              category: Espectacular
+              thumbnail: img/Espectacular.jpg

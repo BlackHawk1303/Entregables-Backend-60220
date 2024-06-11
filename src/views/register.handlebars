@@ -1,0 +1,29 @@
+<div class="form-container">
+    <h1>Registro</h1>
+    <form id="registerForm" action="/users/register" method="post">
+        <label>Nombre</label>
+        <input name="first_name" required>
+        <br />
+        <label>Apellido</label>
+        <input name="last_name" required>
+        <br />
+        <label>Email</label>
+        <input name="email" type="email" required autocomplete="email">
+        <br />
+        <label>Edad</label>
+        <input name="age" required>
+        <br />
+        <label>Contraseña</label>
+        <input type="password" name="password" required autocomplete="new-password">
+        <br />
+        <label>Confirmar Contraseña</label>
+        <input type="password" name="confirmPassword" required autocomplete="new-password">
+        <input type="submit">
+    </form>
+    {{#if errorMessage}}
+    <p class="error-message" style="color: red;">{{errorMessage}}</p>
+    {{/if}}
+    <p>¿Ya Tienes una Cuenta Creada? <a href="/login">Inicia Sesión Aquí</a></p>
+</div>
+
+<script src="/js/register.js"></script>
