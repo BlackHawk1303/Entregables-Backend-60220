@@ -1,0 +1,139 @@
+paths:
+  /api/carts/{_id}:
+    put:
+      summary: Actualizar el Carrito Usando el ID Proporcionado (solo para Usuarios Registrados y Premium)
+      tags:
+        - Carritos
+      parameters:
+        - name: _id
+          in: path
+          description: Necesita el ID del Carrito (ID de MongoDB).
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/UpdateCart"
+      responses:
+        "200":
+          description: Carrito Modificado Correctamente.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Carrito Modificado Correctamente
+        "400":
+          description: Campos Vacíos.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No se Puede Encontrar el ID Proporcionado o Necesita Estar Autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: El Servidor no Puede Responder a la Solicitud.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  api/carts/{cid}/products/{pid}:
+    put:
+      summary: Agregar un Producto al Carrito del Usuario (Solo para Usuarios Registrados y Premium)
+      tags:
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          description: El ID del Carrito Asignado al Usuario.
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+        - name: pid
+          in: path
+          description: El ID del Producto.
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: Cantidad del Producto.
+              example:
+                quantity: 1
+      responses:
+        "200":
+          description: Producto Agregado al Carrito.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Producto Agregado al Carrito
+        "400":
+          description: Campos Vacíos o Datos Inválidos.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No Se Puede Encontrar el ID del Carrito o Producto, o Necesita Estar Autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: El Servidor No Puede Responder a la Solicitud.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  requestBodies:
+    UpdateCart:
+      type: object
+      required:
+        - products
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+                description: ID del Producto.
+              quantity:
+                type: integer
+                description: Cantidad del Producto.
+          description: Lista de Productos en el Carrito.
+      example:
+        products:
+          - productId: 60d21b4667d0d8992e610c85
+            quantity: 2
+          - productId: 60d21b4667d0d8992e610c86
+            quantity: 1
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del Error.
+      example:
+        message: "Error del Servidor"

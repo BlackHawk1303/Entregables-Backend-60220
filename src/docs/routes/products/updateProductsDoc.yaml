@@ -1,0 +1,93 @@
+paths:
+  /api/products/{_id}:
+    put:
+      summary: Actualizar el Producto Usando el ID Proporcionado (solo para Usuarios Administradores y Premium)
+      tags:
+        - Productos
+      parameters:
+        - name: _id
+          in: path
+          description: Necesita el ID del Producto (ID de MongoDB).
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/UpdateProduct"
+      responses:
+        "200":
+          description: Producto Modificado Correctamente.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: producto Modificado Correctamente
+        "400":
+          description: Campos Vacíos.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No se Puede Encontrar el ID Proporcionado o Necesita estar Autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: El Servidor no Puede Responder a la Solicitud.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  requestBodies:
+    UpdateProduct:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - stock
+        - category
+        - thumbnail
+      properties:
+        title:
+          type: string
+          description: Nombre del Producto.
+        description:
+          type: string
+          description: Descripción del Producto.
+        price:
+          type: number
+          description: Precio del Producto.
+        stock:
+          type: integer
+          description: Stock del Producto.
+        category:
+          type: string
+          description: Categoría del Producto.
+        thumbnail:
+          type: string
+          description: Miniatura del Producto.
+          example:
+            title: Producto Espectacular
+            description: Una Descripción Digna de un Producto Espectacular
+            price: 25000
+            stock: 230
+            category: Espectacular
+            thumbnail: img/Espectacular.jpg
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del Error.
+      example:
+        message: "Error del Servidor"

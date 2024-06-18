@@ -1,0 +1,148 @@
+paths:
+  /api/products/:
+    post:
+      summary: Crear Productos (solo Funciona para Usuarios Administradores y pPremium)
+      tags:
+        - Productos
+      requestBody:
+        $ref: "#/components/requestBodies/CreateProduct"
+      responses:
+        "200":
+          description: El Producto ha Sido Creado Exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
+          description: Solicitud Incorrecta.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No Autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Prohibido.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error Interno del Servidor.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - _id
+        - title
+        - description
+        - code
+        - status
+        - price
+        - stock
+        - category
+        - thumbnail
+        - owner
+      properties:
+        _id:
+          type: string
+          description: ID asignado por MongoDB.
+        title:
+          type: string
+          description: Título del Producto.
+        description:
+          type: string
+          description: Descripción del Producto.
+        code:
+          type: string
+          description: Código del Producto, Asignado por la Aplicación.
+        status:
+          type: boolean
+          description: Estado del Producto, Siempre es True.
+        price:
+          type: number
+          format: float
+          description: Precio del Producto.
+        stock:
+          type: integer
+          description: Cantidad de Producto en Stock.
+        category:
+          type: string
+          description: Categoría del Producto.
+        thumbnail:
+          type: string
+          description: URL de la Imagen en Miniatura del Producto.
+        owner:
+          type: string
+          description: Propietario del Producto; los Usuarios que Pueden Crear un Producto son Administradores y Premium.
+      example:
+        _id: 6640438b2a9e8b573ea868f2
+        title: "Pez Metálico Fantástico"
+        description: "La Tecnología de Compresión Más Avanzada de Boston Aumenta la Oxigenación Muscular..."
+        code: "248aa7ab-093b-404e-94fd-36a42b682095"
+        status: true
+        price: 333
+        stock: 298
+        category: "Juguetes"
+        thumbnail: "Imagen/224"
+        owner: "usuarioPremium123"
+
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID del Producto Creado.
+        title:
+          type: string
+          description: Nombre del Producto.
+        description:
+          type: string
+          description: Descripción del Producto.
+        price:
+          type: number
+          format: float
+          description: Precio del Producto.
+        stock:
+          type: integer
+          description: Cantidad de Unidades en Stock.
+        category:
+          type: string
+          description: Categoría del Producto.
+        thumbnail:
+          type: string
+          description: URL de la Imagen en Miniatura del Producto.
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha y Hora de Creación del Producto.
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del Error.
+        code:
+          type: integer
+          description: Código de Error.
+      example:
+        message: "No Autorizado"
+        code: 401
+
+  requestBodies:
+    CreateProduct:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Product"

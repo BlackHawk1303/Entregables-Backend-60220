@@ -1,0 +1,6 @@
+fatal: GET request en / - Fecha y Hora: 2024-05-18 23:54:01 - Descripción: Ocurrió un Error Crítico que Requiere Atención Inmediata.
+error: GET request en / - Fecha y Hora: 2024-05-18 23:54:01 - Descripción: Ocurrió un Error en la Aplicación.
+warning: GET request en / - Fecha y Hora: 2024-05-18 23:54:01 - Descripción: Advertencia Sobre un Posible Problema.
+http: GET request en / - Fecha y Hora: 2024-05-18 23:54:01 - Descripción: Información de la Solicitud HTTP Recibida.
+info: GET request en / - Fecha y Hora: 2024-05-18 23:54:01 - Descripción: Información General sobre la Operación de la Aplicación.
+debug: GET request en / - Fecha y Hora: 2024-05-18 23:54:01 - Descripción: Mensaje de Depuración solo Visible en Modo Desarrollo. [Dev]

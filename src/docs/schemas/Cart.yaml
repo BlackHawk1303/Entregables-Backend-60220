@@ -1,0 +1,115 @@
+components:
+  schemas:
+    Cart:
+      type: object
+      required:
+        - resultado
+        - carga
+      properties:
+        resultado:
+          type: string
+          description: Estado del Resultado de la Operación.
+        carga:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+          description: Lista de Carritos con Detalles de Productos y Cantidades.
+      example:
+        resultado: éxito
+        carga:
+          - _id: "6635c769fdcef40e1dfee802"
+            productos:
+              - producto:
+                  owner: "admin"
+                  _id: "6640438b2a9e8b573ea8690f"
+                  title: "MousePad Ergonómico"
+                  description: "Nueva gama de Mousepads Ergonomicos Diseñados para ti. Con ajustes y Estilos que te Harán Destacar."
+                  code: "9592fc3a-d8f3-462d-9118-e37d354d90d8"
+                  status: true
+                  price: 10000
+                  stock: 42
+                  category: "Seguridad"
+                  thumbnail: "Imagen/199"
+                cantidad: 1
+                _id: "665d34e60308f2a9accefc75"
+              - producto:
+                  _id: "665d21a86c52c5c457a7a1cd"
+                  title: "Audifonos"
+                  description: "Audifonos Bestiales"
+                  code: "96ff932e-17ad-4279-a645-00cae0cccb1a"
+                  status: true
+                  price: 20000
+                  stock: 120
+                  category: "Audio"
+                  thumbnail: "Audio"
+                  owner: "admin"
+                cantidad: 1
+                _id: "665d34ee0308f2a9accefc7e"
+
+    CartItem:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Identificador Único del Carrito.
+        productos:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductInCart"
+          description: Lista de Productos en el Carrito.
+    ProductInCart:
+      type: object
+      required:
+        - producto
+        - cantidad
+      properties:
+        producto:
+          $ref: "#/components/schemas/Product"
+        cantidad:
+          type: integer
+          description: Cantidad del Producto en el Carrito.
+    Product:
+      type: object
+      required:
+        - _id
+        - title
+        - description
+        - code
+        - status
+        - price
+        - stock
+        - category
+        - thumbnail
+        - owner
+      properties:
+        _id:
+          type: string
+          description: ID asignado por MongoDB.
+        title:
+          type: string
+          description: Título del Producto.
+        description:
+          type: string
+          description: Descripción del Producto.
+        code:
+          type: string
+          description: Código del Producto, Asignado por la Aplicación.
+        status:
+          type: boolean
+          description: Estado del Producto, Indica si está Activo.
+        price:
+          type: number
+          format: float
+          description: Precio del Producto.
+        stock:
+          type: integer
+          description: Cantidad de Producto en Stock.
+        category:
+          type: string
+          description: Categoría del Producto.
+        thumbnail:
+          type: string
+          description: URL de la Imagen en Miniatura del Producto.
+        owner:
+          type: string
+          description: Propietario del Producto; los Usuarios que Pueden Crear un Producto son Administradores y Usuarios Premium.
