@@ -1,0 +1,79 @@
+paths:
+  /api/carts/{cid}/products/{pid}:
+    post:
+      summary: Agregar un Producto al Carrito del Usuario (Solo Funciona para Usuarios Premium y Registrados)
+      tags:
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          description: El ID del Carrito Asignado al Usuario
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+        - name: pid
+          in: path
+          description: El ID del Producto
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+      responses:
+        "200":
+          description: El Producto ha sido agregado al Carrito
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Producto Agregado al Carrito
+        "401":
+          description: No se puede Encontrar el `pid` o `cid` o no Está Autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: La Aplicación no Puede Agregar el Producto Debido a una Consulta Incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/carts/{cid}/purchases:
+    post:
+      summary: Procesar los Productos en el Carrito del Usuario (Envía un Correo Electrónico al Usuario)
+      tags:
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          description: El ID del Carrito Asignado al Usuario
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+      responses:
+        "200":
+          description: Confirmación de la Aplicación (Envía el Correo Electrónico al Usuario, esto Funciona Cuando el Usuario ha Iniciado Sesión)
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Compra Procesada y Correo Enviado al Usuario
+        "500":
+          description: La Aplicación no Puede Procesar la compra Debido a una Consulta Incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del Error.
+      example:
+        message: "Error del S<ervidor"

@@ -1,0 +1,60 @@
+paths:
+  /api/carts/{_id}:
+    delete:
+      summary: Eliminar Carrito por el ID Dado (Solo para Usuarios Registrados y Premium)
+      tags:
+        - Carritos
+      parameters:
+        - name: _id
+          in: path
+          description: Se Necesita el ID del Carrito (ID de MongoDB)
+          required: true
+          schema:
+            type: string
+            example: 60d21b4667d0d8992e610c85
+      responses:
+        "200":
+          description: El Carrito fue Eliminado Correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Carrito Eliminado Correctamente"
+        "400":
+          description: Campos Vacíos.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No se Puede Encontrar el ID Dado o No Está Autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Prohibido.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: El Servidor No Puede Responder a la Solicitud.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del Error.
+      example:
+        message: "Error Del Servidor"

@@ -1,0 +1,21 @@
+<div class="form-container">
+    <h1>Login</h1>
+    <form id="loginForm" action="/login" method="post">
+        <label>Email</label>
+        <input name="email" type="email" required autocomplete="email">
+        <br />
+        <label>Contraseña</label>
+        <input type="password" name="password" required autocomplete="current-password">
+        <input type="submit">
+    </form>
+    {{#if errorMessage}}
+    <p style="color: red;">{{errorMessage}}</p>
+    {{/if}}
+    <p>¿Haz Olvidado tu Contraseña? <a href="/user/recovery">Restablece tu Contraseña Aquí</a></p>
+    <p>¿Aún no estás Registrado? <a href="/register">Regístrate Aquí</a></p>
+    <p>O Ingresa a Traves de...
+        <a href="/github/login"> <img src="/img/github.svg" /> </a> 
+    </p>
+</div>
+
+<script src="/js/login.js"></script>
