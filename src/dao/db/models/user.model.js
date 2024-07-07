@@ -31,6 +31,16 @@ const userSchema = new mongoose.Schema({
     role:{
         type:String,
         default: "user"
+    },
+    documents: {
+        type: [{
+            doc_name: {type: String},
+            reference: {type: String},
+        }],
+        default: []
+    },
+    last_connection: {type: String,
+        default: ""
     }
     
 });

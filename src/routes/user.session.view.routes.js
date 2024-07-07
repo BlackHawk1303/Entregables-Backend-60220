@@ -4,8 +4,8 @@ import { validationResult } from "express-validator"
 import userModel from "../dao/db/models/user.model.js"
 import passport from 'passport'
 import passportLocal from 'passport-local'
-import { authToken, validpass, tokenGenerator, HTTP_STATUS } from "../utils.js"
-import { userLogin, get_User, current_user, premium_change } from "../controllers/all.controller.js"
+import { authToken, validpass, tokenGenerator, HTTP_STATUS, uploader, uploaderArray } from "../utils.js"
+import { userLogin, get_User, current_user, premium_change, subirDocumentoUsuario,userLogout } from "../controllers/all.controller.js"
 import { authorization } from "../utils.js"
 
 
@@ -38,13 +38,7 @@ router.post("/user/register", passport.authenticate('register', { failureRedirec
 
 router.post("/user/login", userLogin)
 
-router.get('/user/logout', (req, res) => {
-    req.logout(err => {
-        req.session.destroy(error => {
-            return res.redirect('/login')
-        })
-    })
-})
+router.post('/user/logout', userLogout )
 
 router.get("/user/register/error", (req, res) => {
     res.status(401).json({ error: "Error al Registrar el Usuario" });
@@ -92,8 +86,10 @@ router.get('/user/recovery', async (req, res) => {
 router.get('/admin/validator', authToken, authorization(["admin", "premium"]), async (req, res) => {
 })
 
+//router.get('/api/user/premium/:uid', premium_change)
 
-router.get('/api/user/premium/:uid', premium_change)
+router.post('/api/user/premium/:_id', uploaderArray.array("files", 3), premium_change)
+router.post('/api/user/:_id/documents', uploader.single('file'), subirDocumentoUsuario)
 
 
 export default router;

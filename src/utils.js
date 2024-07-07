@@ -7,6 +7,10 @@ import jwt from 'jsonwebtoken'
 import { faker } from '@faker-js/faker'
 import { v4 as uuid } from 'uuid'
 
+import multer from "multer"
+import fs from "fs"
+import path from "path"
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -122,6 +126,103 @@ export const formattedDay = (date) => {
     return day < 10 ? '0' + day : day.toString();
 }
 //NEW
+
+//Un Archivo
+const determinarRutaDeCarga = (mimetype, userId) => {
+    let rutaDirectorio = ''
+    let tipoArchivo = ''
+
+    switch (mimetype) {
+        case "image/png":
+            rutaDirectorio = path.join(__dirname, `/upload/profiles/${userId}/`)
+            tipoArchivo = 'profile'
+            break
+        case "application/pdf":
+            rutaDirectorio = path.join(__dirname, `/upload/documents/${userId}/`)
+            tipoArchivo = 'documents'
+            break
+        case "image/jpg":
+            rutaDirectorio = path.join(__dirname, `/upload/products/${userId}/`)
+            tipoArchivo = 'image'
+            break
+    }
+    return { rutaDirectorio, tipoArchivo }
+}
+
+//Config Almacenamiento
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const { _id: userId } = req.params
+
+        const { rutaDirectorio, tipoArchivo } = determinarRutaDeCarga(file.mimetype, userId)
+
+        if (rutaDirectorio) {
+            if (!fs.existsSync(rutaDirectorio)) {
+                fs.mkdirSync(rutaDirectorio, { recursive: true })
+            }
+            req.rutaDirectorio = rutaDirectorio
+            req.tipoArchivo = tipoArchivo
+            cb(null, rutaDirectorio)
+        } 
+
+        else
+        {
+            cb(new Error("Tipo de Archivo no Válido. Solo se Aceptan Archivos .PDF, .JPG y .PNG"))
+        }
+        // else {
+        //     // cb(new Error("Tipo de Archivo no Válido. Solo se Aceptan Archivos .PDF, .JPG y .PNG"))
+        //     cb(null, false)
+        // }
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+})
+
+export const uploader = multer({
+    storage,
+    onError: (err, next) => {
+        console.error(err)
+        next(err)
+    }
+})
+
+//Config Almacenamiento Array
+const almacenamientoArray = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const { _id: userId } = req.params
+        const rutaDirectorio = path.join(__dirname, `/upload/documents/${userId}/`)
+        if (!fs.existsSync(rutaDirectorio)) {
+            fs.mkdirSync(rutaDirectorio, { recursive: true })
+        }
+        console.log("AQUI")
+        cb(null, rutaDirectorio)
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+})
+
+const archivosValidos = (req, file, cb) => {
+    // const esPdf = file.mimetype === "application/pdf"
+    // req.noValido = !esPdf
+    // cb(null, esPdf)
+    let fileCorrect = false
+    if (file.mimetype === "application/pdf") fileCorrect = true
+    req.noValid = fileCorrect;
+    if (!fileCorrect) cb(null, false)
+    else cb(null, true);
+}
+
+export const uploaderArray = multer({
+    storage: almacenamientoArray,
+    fileFilter: archivosValidos,
+    onError: (err, next) => {
+        console.error(err)
+        next(err)
+    }
+})
+//
 export const HTTP_STATUS = {
     NOT_FOUND: 404,
     UNAUTHORIZED: 401,

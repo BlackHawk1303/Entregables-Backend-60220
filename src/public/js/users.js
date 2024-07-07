@@ -1,3 +1,33 @@
+const closeSession = document.getElementById("shutdownSession")
+
+closeSession.addEventListener('click', async e =>{
+
+    
+
+    const userId = localStorage.getItem('userID');
+    const data = {"_id" : userId}
+
+    const response = await fetch('/user/logout', {
+        method: 'POST',
+        body : JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });    
+
+    if (!response.ok){
+        alert('No Se Ha Podido Cerrar Sesión')
+    }
+    else{
+        localStorage.clear();
+        alert('Sesión Cerrada')
+        window.location.replace('/login')
+    }
+
+    
+
+})
+
 function renderUserData(user) {
     const html = `
         <h1>Perfil de: ${user.name}</h1>
@@ -43,5 +73,7 @@ async function loadData() {
     const div = document.getElementById('midiv')
     div.innerHTML = renderUserData(user)
 }
+
+
 
 window.onload = loadData;

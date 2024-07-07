@@ -16,6 +16,7 @@ import { generaterProduct, passwordHash, formattedMonth } from '../utils.js'
 import EmailRecoveryProvider from '../services/emailRecovery.services.js'
 import EmailSender from '../services/email.services.js'
 //Imports
+import { format } from "date-fns"
 
 const userManager = new UserProvider()
 const productManager = new ProdServices()
@@ -42,8 +43,13 @@ export const userLogin = async (req, res) => {
             role: user.role
         };
 
+        const currentDateTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+
+        user.last_connection = `${currentDateTime} LOG IN`
+        const statuss = await userManager.updateUser({_id : user._id}, user)        
+
         const token = tokenGenerator(tokenData);
-        console.log(token)
+        
         res.send({ message: "Inicio de Sesión Satisfactorio", token, id: user._id });
     } catch (error) {
         console.error("Error al Iniciar Sesión:", error);
@@ -69,11 +75,15 @@ export const current_user = async (req, res) => {
 
 
 }
-
 export const premium_change = async (req, res) => {
-
     try {
-        const _id = { _id: req.params.uid }
+
+        if (!req.files || req.files.length === 0) return res.status(400).send('No Subió Ningún Archivo')
+        if (!req.noValid) return res.status(400).send("Tipo de Archivo no Permitido, Sólo Archivos PDF")
+
+        
+        const _id = { _id: req.params._id }
+        
         let user = await userManager.findUser(_id)
         if (user.length === 0) {
             return res.status(401).send("usuario no encontrado")
@@ -82,12 +92,37 @@ export const premium_change = async (req, res) => {
         const result = await userManager.updateUser(_id, user)
         if (result.acknowledged) res.send("Rol aplicado correctamente")
         else res.send("error al cambiar el rol")
-
-
     }
     catch (error) {
-
     }
+}
+
+export const subirDocumentoUsuario = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).send("No hay Información que Subir. Por Favor, Valide.")
+        } else {
+            return res.send(`Archivo Subido Correctamente: ${req.file.path}`)
+        }
+    } catch (e) {
+        console.error(e)
+        res.status(500).send("Ocurrió un Error al Subir el Archivo. Por Favor, Inténtelo de Nuevo.")
+    }
+}
+
+export const userLogout = async (req, res)=>{
+    // req.logout(err => {
+    //     req.session.destroy(error => {
+    //         return res.redirect('/login')
+    //     })
+    // })
+
+    const {_id} = req.body    
+    let user = await userManager.findUser({"_id":_id})
+    const currentDateTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+    user.last_connection = `${currentDateTime} LOG OUT`
+    const status = await userManager.updateUser({_id : user._id}, user)    
+    res.redirect('/login')
 
 }
 
