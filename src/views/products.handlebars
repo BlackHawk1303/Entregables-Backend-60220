@@ -1,0 +1,165 @@
+{{#if valid}}
+<div class="product-container">
+    <div id="header">
+        <a href="/user/current">Ir a Usuario</a>
+        <a href="/chat">Chat</a>
+        <a id="enlace" href="">Ir a Carrito</a>
+    </div>
+    <div>
+        <h1 id="UserTitle">BIENVENIDO ("{{user.rol}}") Sr/a {{user.name}} Edad {{user.age}}</h1>
+        <div class="logout-container">
+            <button id="logout">Cerrar Sesión</button>
+        </div>
+    </div>
+    <div class="product-grid">
+        {{#each payload}}
+        <div class="product-item">
+            <p><strong>Título:</strong> {{this.title}}</p>
+            <p><strong>Descripción:</strong> {{this.description}}</p>
+            <p><strong>Código:</strong> {{this.code}}</p>
+            <p><strong>Estado:</strong> {{this.status}}</p>
+            <p><strong>Precio:</strong> {{this.price}}</p>
+            <p><strong>Stock:</strong> {{this.stock}}</p>
+            <p><strong>Categoría:</strong> {{this.category}}</p>
+            <button class="allBtn" name="{{this.id}}">Enviar al Carrito</button>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<br />
+<div class="navigation-links">
+    {{#if hasPrevPage}}
+    <a href="{{this.prevLink}}">Pagina Anterior</a>
+    {{/if}}
+    {{this.page}}
+    {{#if hasNextPage}}
+    <a href="{{this.nextLink}}">Pagina Siguiente</a>
+    {{/if}}
+</div>
+{{else}}
+<h1>NO HAY PRODUCTOS CON LA BÚSQUEDA APLICADA</h1>
+{{/if}}
+
+<script src="/js/infoCart.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<style>
+    /* Estilos Globales */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f4f4;
+        color: #333;
+    }
+
+    /* Estilos para el Contenedor de Productos */
+    .product-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    #header a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+
+    #header a:last-child{
+        margin-right: 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    .logout-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #logout {
+        padding: 10px 20px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #logout:hover {
+        background-color: #c82333;
+    }
+
+    .product-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .product-item {
+        flex: 1 1 calc(33.333% - 20px);
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-item p {
+        margin: 5px 0;
+    }
+
+    .allBtn {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        align-self: flex-start;
+    }
+
+    .allBtn:hover {
+        background-color: #0056b3;
+    }
+
+    .navigation-links {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .navigation-links a {
+        padding: 8px 12px;
+        background-color: #28a745;
+        color: white;
+        border-radius: 4px;
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+    .navigation-links a:hover {
+        background-color: #218838;
+    }
+</style>

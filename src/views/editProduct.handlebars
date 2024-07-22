@@ -1,0 +1,121 @@
+<div class="product-body">
+    <div class="product-content">
+        <div id="header">
+        <a href="/user/administrator/user">Ir a Modificar/Usuario</a>
+        </div>
+        <h2>Agrega tus Productos</h2>
+        <div class="form-container">
+            <label for="txtTitleCreate">Título</label>
+            <input type="text" id="txtTitleCreate" placeholder="Título del producto">
+            
+            <label for="txtDescriptionCreate">Descripción</label>
+            <input type="text" id="txtDescriptionCreate" placeholder="Descripción del producto">
+            
+            <label for="txtPriceCreate">Precio</label>
+            <input type="text" id="txtPriceCreate" placeholder="Precio del producto">
+            
+            <label for="txtStockCreate">Stock</label>
+            <input type="text" id="txtStockCreate" placeholder="Stock disponible">
+            
+            <label for="txtCategoryCreate">Categoría</label>
+            <input type="text" id="txtCategoryCreate" placeholder="Categoría del producto">
+            
+            <label for="txtThumbnailCreate">Thumbnail</label>
+            <input type="text" id="txtThumbnailCreate" placeholder="URL de la imagen">
+            
+            <button id="btnAgregar" class="btn btn-primary">Agregar Producto</button>
+        </div>
+        
+        <h2>Actualiza tus Productos</h2>
+        <div class="form-container">
+            <label for="txtIDUpdate">ID</label>
+            <input type="text" id="txtIDUpdate" placeholder="ID del producto">
+            
+            <label for="txtTitleUpdate">Título</label>
+            <input type="text" id="txtTitleUpdate" placeholder="Título del producto">
+            
+            <label for="txtDescriptionUpdate">Descripción</label>
+            <input type="text" id="txtDescriptionUpdate" placeholder="Descripción del producto">
+            
+            <label for="txtPriceUpdate">Precio</label>
+            <input type="text" id="txtPriceUpdate" placeholder="Precio del producto">
+            
+            <label for="txtStockUpdate">Stock</label>
+            <input type="text" id="txtStockUpdate" placeholder="Stock disponible">
+            
+            <label for="txtCategoryUpdate">Categoría</label>
+            <input type="text" id="txtCategoryUpdate" placeholder="Categoría del producto">
+            
+            <label for="txtThumbnailUpdate">Thumbnail</label>
+            <input type="text" id="txtThumbnailUpdate" placeholder="URL de la imagen">
+            
+            <button id="btnUpdate" class="btn btn-primary">Actualizar</button>
+        </div>
+        
+        <h2>Eliminar tus Productos</h2>
+        <div class="form-container">
+            <label for="txtIDDelete">ID</label>
+            <input type="text" id="txtIDDelete" placeholder="ID del producto">
+            <button id="btnDelete" class="btn btn-danger">Eliminar/Borrar</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/adminProduct.js"></script>
+<script src="/js/auntAdmin.js"></script>
+
+<style>
+    .product-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #f4f4f4;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .product-content {
+        width: 100%;
+        max-width: 800px;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+        margin-bottom: 20px;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .form-container input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>

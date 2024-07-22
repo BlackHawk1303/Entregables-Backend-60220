@@ -1,0 +1,41 @@
+components:
+  requestBodies:
+    createProduct:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - title
+              - description
+              - price
+              - stock
+              - category
+              - thumbnail
+            properties:
+              title:
+                type: string
+                description: Nombre del Producto
+              description:
+                type: string
+                description: Descripción del Producto
+              price:
+                type: number
+                format: float
+                description: Precio del Producto
+              stock:
+                type: integer
+                description: Cantidad de Producto en Stock
+              category:
+                type: string
+                description: Categoría del Producto
+              thumbnail:
+                type: string
+                description: URL de laImagen en Miniatura del Producto
+            example:
+              title: Producto Espectacular
+              description: Una Descripción Digna de un Producto Espectacular
+              price: 25000
+              stock: 230
+              category: Espectacular
+              thumbnail: img/Espectacular.jpg

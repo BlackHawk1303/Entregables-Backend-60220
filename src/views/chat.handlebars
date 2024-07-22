@@ -1,0 +1,118 @@
+<div class="chat-body">
+    <div class="chat-content">
+        <div class="chat-box">
+            <div id="header">
+        <a href="/user/current">Ir a Usuario</a>
+    </div>
+            <div class="chat-input">
+                <label for="inputText">Introduce tu Mensaje:</label>
+                <input id="inputText" type="text" alt="Tu Mensaje Aqui" placeholder="Escribe tu Mensaje Aquí...">
+                <button id="btnSend" class="btn btn-primary">ENVIAR</button>
+            </div>
+            <div class="chat-messages">
+                <h2>Registro de Mensajes</h2>
+                <div id="log"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/messages.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<style>
+    .chat-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    .chat-content {
+        width: 100%;
+        max-width: 800px;
+        padding: 20px;
+    }
+
+    .chat-box {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-input {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .chat-input label {
+        margin-bottom: 10px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .chat-input input[type="text"] {
+        width: calc(100% - 100px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .chat-messages {
+        border: 1px solid #eee;
+        padding: 20px;
+        border-radius: 8px;
+        background: #f9f9f9;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .chat-messages h2 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .chat-messages #log {
+        white-space: pre-wrap;
+    }
+
+        #header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    #header a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+
+    #header a:last-child{
+        margin-right: 0;
+    }
+</style>

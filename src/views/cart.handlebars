@@ -1,0 +1,98 @@
+{{#if success}}
+<div class="cart-container">
+    <div id="header">
+        <a href="/user/current">Usuario</a>
+        <a href="/products">Productos</a>
+    </div>
+    <p>CART ID : {{docs.0._id}} </p>
+    {{log docs}}
+    {{#each docs}}
+    <div class="cart-item">
+        {{#each this.products}}
+        <div class="product-details">
+            <p>Titulo : {{this.products.title}} </p>
+            <p>Descripción : {{this.products.description}} </p>
+            <p>Codigo : {{this.products.code}} </p>
+            <p>Estado : {{this.products.status}} </p>
+            <p>Precio : {{this.products.price}} </p>
+            <p>Stock : {{this.products.stock}} </p>
+            <p>Categoria : {{this.products.category}} </p>
+            <p>Cantidad : {{this.quantity}} </p>
+        </div>
+        <p>-----------------------------------------------</p>
+        {{/each}}
+    </div>
+    {{/each}}
+    <button id="btnComprar">Comprar</button>
+</div>
+{{else}}
+<h1 class="cart-title">Carro</h1>
+<h1>Carro de Compras Vacio</h1>
+{{/if}}
+<script src="/js/buyProducts.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cart-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    #header a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .cart-item {
+        border-top: 1px solid #ddd;
+        padding: 10px 0;
+    }
+
+    .product-details p {
+        margin: 5px 0;
+    }
+
+    #btnComprar {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    #btnComprar:hover {
+        background: #0056b3;
+    }
+
+    .cart-title {
+        text-align: center;
+        margin: 50px 0;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+</style>

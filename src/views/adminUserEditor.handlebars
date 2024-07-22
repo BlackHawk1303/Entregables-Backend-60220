@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="search-section">
+        <div id="header">
+        <a href="/user/administrator">Ir a Administrar Productos</a>
+        </div>
+        <h2>Ingresa el ID del Usuario a Modificar</h2>
+        <label for="txtUserID">ID</label>
+        <input type="text" id="txtUserID">
+        <button id="btnUserSearch" class="btn btn-primary">Buscar</button>
+    </div>
+
+    <div class="user-info-section">
+        <h2>Datos del Usuario</h2>
+        <div class="user-id">
+            <h3>ID del Usuario</h3>
+            <p id="displayUserID"></p>
+        </div>
+        <div class="user-role">
+            <label for="userRol">ROL</label>
+            <select id="userRol">
+                <option value="none">Ninguno</option>
+                <option value="USER">USER</option>
+                <option value="PREMIUM">Premium</option>
+            </select>
+            <button id="btnUserUpdate" class="btn btn-success">Modificar</button>
+        </div>
+    </div>
+
+    <div class="delete-section">
+        <button id="btnUserDelete" class="btn btn-danger">Borrar Usuario</button>
+    </div>
+</div>
+<script src="/js/AdminUserHandler.js"></script>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .search-section,
+    .user-info-section,
+    .delete-section {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .user-info-section .user-id,
+    .user-info-section .user-role {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
